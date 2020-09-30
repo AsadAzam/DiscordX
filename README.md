@@ -58,7 +58,8 @@ The following applications are supported:
 - `RealityComposer`
 
 ## Dependencies
-If you are modifying/ tweaking the application make sure you change the Development Team
+If you are modifying/ tweaking the application make sure you change the *Team* under *Signing & Capabilities*.
+
 DiscordX uses [PKBeam's Fork](https://github.com/PKBeam/SwordRPC) of [Azoy's SwordRPC](https://github.com/Azoy/SwordRPC).
 
 ## System Requirements
