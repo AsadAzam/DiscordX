@@ -1,5 +1,5 @@
 # DiscordX
-
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/AsadAzam/DiscordX?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/AsadAzam/DiscordX?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/issues-raw/AsadAzam/DiscordX?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/issues-closed-raw/AsadAzam/DiscordX?style=for-the-badge)
