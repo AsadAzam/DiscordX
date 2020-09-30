@@ -21,6 +21,7 @@ DiscordX adds support for Xcode on Discord AKA Discord Rich Presence
 </p>
 
 DiscordX displays, the current file you are working on, as well as the current workspace in use. It uses the same icons which exist in Xcode 12.0.1 (12A7300)
+
 DIscordX adds support for current application in use too. There are other applications that do the exact same thing but none of them which I used supported applications or such a wide variety of file types, also none of them are updated for Xcode 12.
 
 The following file type extensions are supported:
@@ -66,6 +67,7 @@ DiscordX uses [PKBeam's Fork](https://github.com/PKBeam/SwordRPC) of [Azoy's Swo
 
 ## Usage
 Simply place the application under Applications Folder (not mandatory) and it will ask for two permissions, one is for controlling Xcode and other is for System Events,
+
 As the app uses Apple script and to perform any operation it would need access to whatever the script is going to run on. 
 
 List of Apple Scipts run:
