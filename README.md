@@ -1,4 +1,12 @@
 # DiscordX
+
+![GitHub](https://img.shields.io/github/license/AsadAzam/DiscordX?style=for-the-badge)
+![GitHub](https://img.shields.io/github/issues-raw/AsadAzam/DiscordX?style=for-the-badge)
+![GitHub](https://img.shields.io/github/issues-closed-raw/AsadAzam/DiscordX?style=for-the-badge)
+![GitHub](https://img.shields.io/github/issues-pr/AsadAzam/DiscordX?style=for-the-badge)
+![GitHub](https://img.shields.io/github/last-commit/AsadAzam/DiscordX?style=for-the-badge)
+![GitHub All Releases](https://img.shields.io/github/downloads/AsadAzam/Discordx/total?style=for-the-badge)
+
 DiscordX adds support for Xcode on Discord AKA Discord Rich Presence
 
 <img src="https://user-images.githubusercontent.com/32137859/94646396-cc2da880-030b-11eb-9c5a-69ce0fe9a993.png">
@@ -40,7 +48,7 @@ The following applications are supported:
 - `RealityComposer`
 
 ## Dependencies
-If you are modifing/ tweaking the applicaton make sure you change the Development Team
+If you are modifying/ tweaking the application make sure you change the Development Team
 DiscordX uses [PKBeam's Fork](https://github.com/PKBeam/SwordRPC) of [Azoy's SwordRPC](https://github.com/Azoy/SwordRPC).
 
 ## System Requirements
@@ -84,4 +92,4 @@ That's it, you're done - DiscordX will now automatically monitor Xcode.
 If you like, you can set DiscordX to automatically open on login.
 
 # Note
-DiscordX is a fork of [RPFX](https://github.com/PKBeam/RPFX) I didn't contribute to the orignal as I didn't like the name RPFX.
+DiscordX is a fork of [RPFX](https://github.com/PKBeam/RPFX) I didn't contribute to the original as I didn't like the name RPFX.
