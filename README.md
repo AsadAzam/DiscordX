@@ -10,7 +10,15 @@
 
 DiscordX adds support for Xcode on Discord AKA Discord Rich Presence
 
-<img src="https://user-images.githubusercontent.com/32137859/94646396-cc2da880-030b-11eb-9c5a-69ce0fe9a993.png">
+<p float="center">
+    <img src="https://user-images.githubusercontent.com/32137859/94646396-cc2da880-030b-11eb-9c5a-69ce0fe9a993.png">
+    <img src="https://user-images.githubusercontent.com/32137859/94650644-b8d30b00-0314-11eb-94f4-d6434d3d1d76.png">
+    <img src="https://user-images.githubusercontent.com/32137859/94650802-05b6e180-0315-11eb-93f0-785db0328552.png">
+    <img src="https://user-images.githubusercontent.com/32137859/94650965-46aef600-0315-11eb-84cf-5f1cf3f109f7.png">
+    <img src="https://user-images.githubusercontent.com/32137859/94651142-98f01700-0315-11eb-8fdb-c11510aaa59b.png">
+    <img src="https://user-images.githubusercontent.com/32137859/94651232-c4730180-0315-11eb-90cd-1ef5af4eacbe.png">
+    <img src="https://user-images.githubusercontent.com/32137859/94651330-ef5d5580-0315-11eb-96f8-7b633830f950.png">
+</p>
 
 DiscordX displays, the current file you are working on, as well as the current workspace in use. It uses the same icons which exist in Xcode 12.0.1 (12A7300)
 DIscordX adds support for current application in use too. There are other applications that do the exact same thing but none of them which I used supported applications or such a wide variety of file types, also none of them are updated for Xcode 12.
