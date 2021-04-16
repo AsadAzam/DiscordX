@@ -67,9 +67,12 @@ DiscordX uses [PKBeam's Fork](https://github.com/PKBeam/SwordRPC) of [Azoy's Swo
 - Xcode installed
 
 ## Usage
-Simply place the application under Applications Folder (not mandatory) and it will ask for two permissions, one is for controlling Xcode and other is for System Events,
+1. Download the project, and open it on Xcode.
+2. Go to Signing & Capabilities, choose **Team** and Select **Sign to Run Locally** in Signing Certificate.
+3. Build and Run the App.
+4. (Optional) Go to Products under the Navigator and right click on DiscordX.app, click on **Show in Finder**. Copy/Cut - Paste in Applications folder and it should be easier to launch next time.
 
-As the app uses Apple script and to perform any operation it would need access to whatever the script is going to run on. 
+After you run it, it will ask for two permissions, one is for controlling Xcode and other is for System Events, as the app uses Apple script and to perform any operation it would need access to whatever the script is going to run on.
 
 List of Apple Scipts run:
 ```
