@@ -3,7 +3,7 @@
 //  DiscordX
 //
 //  Created by Asad Azam on 28/9/20.
-//  Copyright © 2020 Asad Azam. All rights reserved.
+//  Copyright © 2021 Asad Azam. All rights reserved.
 //
 
 import Cocoa
@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var timer: Timer?
     var rpc: SwordRPC?
     var startDate: Date?
+    var inactiveDate: Date?
     var lastWindow: String?
 
     func beginTimer() {
@@ -39,11 +40,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let fn = getActiveFilename() //fn -> File Name
         let ws = getActiveWorkspace() //ws -> Workspace
-
+        
+//        print("Application Name: \(an ?? "")\nFile Name: \(fn ?? "")\nWorkspace: \(ws ?? "")\n")
+        
         // determine file type
         if fn != nil && an == "Xcode" {
             p.details = "Editing \(fn!)"
-
             if let fileExt = getFileExt(fn!), discordRPImageKeys.contains(fileExt) {
                 p.assets.largeImage = fileExt
                 p.assets.smallImage = discordRPImageKeyXcode
@@ -66,7 +68,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     lastWindow = ws!
                 }
             } else {
-                p.state = "on \(withoutFileExt(lastWindow ?? "?" ))"
+                p.assets.smallImage = discordRPImageKeyXcode
+                p.assets.largeImage = discordRPImageKeyDefault
+                p.state = "Working on \(withoutFileExt(lastWindow ?? "?" ))"
             }
         }
 
@@ -127,8 +131,58 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         })
-
-
+        
+        if strictMode {
+            notifCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: nil, using: { notif in
+                if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                    if app.bundleIdentifier == xcodeBundleId {
+                        //Xcode became active again (Frontmost)
+                        if let inactiveDate = self.inactiveDate {
+                            let newDate: Date? = self.startDate?.addingTimeInterval(-inactiveDate.timeIntervalSinceNow)
+//                            print(self.startDate, newDate)
+                            self.startDate = newDate
+                        }
+                        self.updateStatus()
+                    }
+                }
+            })
+            
+            notifCenter.addObserver(forName: NSWorkspace.didDeactivateApplicationNotification, object: nil, queue: nil, using: { notif in
+                if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                    if app.bundleIdentifier == xcodeBundleId {
+                        //Xcode is inactive (Not frontmost)
+                        self.inactiveDate = Date()
+                        self.updateStatus()
+                    }
+                }
+            })
+        }
+        
+        if !flauntMode {
+            notifCenter.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: nil, using: { notif in
+                if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                    if app.bundleIdentifier == xcodeBundleId {
+                        //Xcode is going to become inactive (Sleep)
+                        self.inactiveDate = Date()
+                        self.updateStatus()
+                    }
+                }
+            })
+            
+            notifCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: nil, using: { notif in
+                if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
+                    if app.bundleIdentifier == xcodeBundleId {
+                        //Xcode woke up from sleep
+                        if let inactiveDate = self.inactiveDate {
+                            let newDate: Date? = self.startDate?.addingTimeInterval(-inactiveDate.timeIntervalSinceNow)
+//                            print(self.startDate, newDate)
+                            self.startDate = newDate
+                        }
+                        self.updateStatus()
+                    }
+                }
+            })
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -137,8 +191,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         deinitRPC()
         clearTimer()
     }
-
-
 }
 
 extension AppDelegate: SwordRPCDelegate {

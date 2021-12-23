@@ -3,7 +3,7 @@
 //  DiscordX
 //
 //  Created by Asad Azam on 28/9/20.
-//  Copyright © 2020 Asad Azam. All rights reserved.
+//  Copyright © 2021 Asad Azam. All rights reserved.
 //
 
 import Foundation
@@ -13,6 +13,16 @@ let xcodeBundleId = "com.apple.dt.Xcode"
 
 // how often we check Xcode for a status update
 let refreshInterval = 5 // seconds
+
+// if you switch out of Xcode the timer stops
+/// true: timer will stop
+/// false: timer will not stop
+let strictMode = true
+
+// it will never stop the timer regardless of anything except if you kill DiscordX
+/// true: timer will not stop
+/// false: timer will stop
+let flauntMode = false
 
 // some other window names of Xcode
 let xcodeWindowNames = [

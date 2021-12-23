@@ -3,11 +3,20 @@
     "pins": [
       {
         "package": "Socket",
-        "repositoryURL": "https://github.com/IBM-Swift/BlueSocket.git",
+        "repositoryURL": "https://github.com/Kitura/BlueSocket.git",
         "state": {
           "branch": null,
-          "revision": "26c8f4e4e3000421a0c97aaf0c7b5e9aa5475222",
-          "version": "0.12.94"
+          "revision": "dd924c3bc2c1c144c42b8dda3896f1a03115ded4",
+          "version": "2.0.2"
+        }
+      },
+      {
+        "package": "swift-argument-parser",
+        "repositoryURL": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "branch": null,
+          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
+          "version": "0.5.0"
         }
       },
       {
@@ -15,7 +24,7 @@
         "repositoryURL": "https://github.com/PKBeam/SwordRPC.git",
         "state": {
           "branch": "master",
-          "revision": "2a4f993f96c5d84c0081d7fc2f290eadeacd5a8b",
+          "revision": "f9831261fcbe6a17243f8839921fb7820e99fa6e",
           "version": null
         }
       }

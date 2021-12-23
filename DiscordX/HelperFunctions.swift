@@ -3,7 +3,7 @@
 //  DiscordX
 //
 //  Created by Asad Azam on 28/9/20.
-//  Copyright © 2020 Asad Azam. All rights reserved.
+//  Copyright © 2021 Asad Azam. All rights reserved.
 //
 
 import Foundation

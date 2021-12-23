@@ -3,7 +3,7 @@
 //  DiscordX
 //
 //  Created by Asad Azam on 28/9/20.
-//  Copyright © 2020 Asad Azam. All rights reserved.
+//  Copyright © 2021 Asad Azam. All rights reserved.
 //
 
 import Foundation
@@ -22,7 +22,7 @@ func runAPScript(_ s: APScripts) -> [String]? {
         \(s.rawValue)
     end tell
     """
-
+    
     // execute the script
     let script = NSAppleScript.init(source: scr)
     let result = script?.executeAndReturnError(nil)
@@ -44,20 +44,46 @@ func runAPScript(_ s: APScripts) -> [String]? {
                 arr.append(uwStrVal)
             }
         }
+        
         return arr
     }
     return nil
 }
 
 func getActiveFilename() -> String? {
+    let activeApplicationVersion = """
+        tell application (path to frontmost application as Unicode text)
+            if name is "Xcode" then
+                get version
+            end if
+        end tell
+    """
+    let result = NSAppleScript(source: activeApplicationVersion)?.executeAndReturnError(nil)
+    let version = result?.stringValue?.split(separator: ".")
+//    print(version?[0], version?[1])
+    
     guard let fileNames = runAPScript(.documentNames) else {
         return nil
     }
-
-    guard let windowNames = runAPScript(.windowNames) else {
+    
+    guard var windowNames = runAPScript(.windowNames) else {
         return nil
     }
-
+    
+    //Hotfix for Xcode 13.2.1
+    if Int(version?[0] ?? "12") == 13 && (Int(version?[1] ?? "5") ?? 5) >= 2 {
+        var correctedNames = [String]()
+        for var windowName in windowNames {
+            if let index = windowName.firstIndex(of: "—") { // — is a special character not - DO NOT GET CONFUSED
+                windowName.removeSubrange(...index)
+                windowName.removeFirst()
+                correctedNames.append(windowName)
+            }
+        }
+        windowNames = correctedNames
+    }
+//    print("\n\tFile Names: \(fileNames)\n\tWindow Names: \(windowNames)\n")
+    
     // find the first window title that matches a filename
     // (the first window name is the one in focus)
     for window in windowNames {
@@ -100,5 +126,5 @@ func getActiveWindow() -> String? {
 //        print(arr[0])
         return arr[0]
     }
-    return "Xcode"
+    return ""
 }
