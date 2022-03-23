@@ -69,7 +69,7 @@ If you are modifying/ tweaking the application, make sure you change the *Team* 
 DiscordX uses [PKBeam's Fork](https://github.com/PKBeam/SwordRPC) of [Azoy's SwordRPC](https://github.com/Azoy/SwordRPC).
 
 ## System Requirements
-- macOS Sierra (10.12) (Minimum)
+- macOS Big Sur (11) (Minimum)
 - Xcode installed
 
 ## Usage
