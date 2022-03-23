@@ -134,12 +134,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                     }
                 }
                 Spacer()
+                Button("Quit DiscordX") {
+                    exit(-1)
+                }
+                .padding(.top)
+                .foregroundColor(.red)
+                Spacer()
             }
         }
         
         let view = NSHostingView(rootView: contentView)
 
-        view.frame = NSRect(x: 0, y: 0, width: 150, height: 100)
+        view.frame = NSRect(x: 0, y: 0, width: 150, height: 130)
                 
         let menuItem = NSMenuItem()
         menuItem.view = view
