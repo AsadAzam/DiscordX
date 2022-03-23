@@ -9,9 +9,7 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/AsadAzam/Discordx/total?style=for-the-badge)
 
 ## New Features
-1. Added two new modes for calculating time spent on Xcode
-2. Added support for Xcode 13.2.1
-3. Fixed a visual bug when switching out of Xcode to other applications
+1. Added a simple Status Bar Menu to start, stop or close the App.
 
 ## TODOs
 1. Keep a log file for time spent on every file
