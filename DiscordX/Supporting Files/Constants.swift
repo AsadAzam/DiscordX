@@ -17,12 +17,12 @@ let refreshInterval = 5 // seconds
 // if you switch out of Xcode the timer stops
 /// true: timer will stop
 /// false: timer will not stop
-let strictMode = true
+var strictMode = true
 
 // it will never stop the timer regardless of anything except if you kill DiscordX
 /// true: timer will not stop
 /// false: timer will stop
-let flauntMode = false
+var flauntMode = false
 
 // some other window names of Xcode
 let xcodeWindowNames = [

@@ -9,18 +9,20 @@
 /* Begin PBXBuildFile section */
 		5028EA45244B181D003A1830 /* HelperFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028EA44244B181D003A1830 /* HelperFunctions.swift */; };
 		5068E2DF244AA3C90012CCF7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5068E2DE244AA3C90012CCF7 /* Constants.swift */; };
-		50C66C1B244B3A5800A4BECD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50C66C1A244B3A5800A4BECD /* Main.storyboard */; };
 		50C6CBB3244974A400F10C5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6CBB2244974A400F10C5D /* AppDelegate.swift */; };
 		50C6CBB7244974A700F10C5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C6CBB6244974A700F10C5D /* Assets.xcassets */; };
 		50C6CBBA244974A700F10C5D /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50C6CBB9244974A700F10C5D /* Preview Assets.xcassets */; };
 		50C6CBC9244975F200F10C5D /* Applescript.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6CBC8244975F200F10C5D /* Applescript.swift */; };
+		C3110E1E27E9E95700F5F30A /* DiscordX.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3110E1D27E9E95700F5F30A /* DiscordX.swift */; };
+		C3110E2027E9EA6B00F5F30A /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3110E1F27E9EA6B00F5F30A /* Persistence.swift */; };
+		C3110E2227E9EB6A00F5F30A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3110E2127E9EB6A00F5F30A /* ContentView.swift */; };
+		C3110E2527E9EC3900F5F30A /* DiscordX.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C3110E2327E9EC3900F5F30A /* DiscordX.xcdatamodeld */; };
 		C3DCE3CB251FBE3F008A8718 /* SwordRPC in Frameworks */ = {isa = PBXBuildFile; productRef = C3DCE3CA251FBE3F008A8718 /* SwordRPC */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5028EA44244B181D003A1830 /* HelperFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperFunctions.swift; sourceTree = "<group>"; };
 		5068E2DE244AA3C90012CCF7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		50C66C1A244B3A5800A4BECD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		50C6CBAF244974A400F10C5D /* DiscordX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiscordX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C6CBB2244974A400F10C5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50C6CBB6244974A700F10C5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -28,6 +30,10 @@
 		50C6CBBE244974A700F10C5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50C6CBBF244974A700F10C5D /* DiscordX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DiscordX.entitlements; sourceTree = "<group>"; };
 		50C6CBC8244975F200F10C5D /* Applescript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Applescript.swift; sourceTree = "<group>"; };
+		C3110E1D27E9E95700F5F30A /* DiscordX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscordX.swift; sourceTree = "<group>"; };
+		C3110E1F27E9EA6B00F5F30A /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		C3110E2127E9EB6A00F5F30A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C3110E2427E9EC3900F5F30A /* DiscordX.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DiscordX.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +68,11 @@
 			isa = PBXGroup;
 			children = (
 				50C6CBB2244974A400F10C5D /* AppDelegate.swift */,
-				5028EA44244B181D003A1830 /* HelperFunctions.swift */,
-				5068E2DE244AA3C90012CCF7 /* Constants.swift */,
-				50C6CBC8244975F200F10C5D /* Applescript.swift */,
+				C3110E2127E9EB6A00F5F30A /* ContentView.swift */,
+				C3110E1D27E9E95700F5F30A /* DiscordX.swift */,
+				C3110E2727EA19FC00F5F30A /* Supporting Files */,
+				C3110E2627EA19D400F5F30A /* CoreData */,
 				50C6CBB6244974A700F10C5D /* Assets.xcassets */,
-				50C66C1A244B3A5800A4BECD /* Main.storyboard */,
 				50C6CBBE244974A700F10C5D /* Info.plist */,
 				50C6CBBF244974A700F10C5D /* DiscordX.entitlements */,
 				50C6CBB8244974A700F10C5D /* Preview Content */,
@@ -80,6 +86,25 @@
 				50C6CBB9244974A700F10C5D /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C3110E2627EA19D400F5F30A /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				C3110E2327E9EC3900F5F30A /* DiscordX.xcdatamodeld */,
+				C3110E1F27E9EA6B00F5F30A /* Persistence.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		C3110E2727EA19FC00F5F30A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				50C6CBC8244975F200F10C5D /* Applescript.swift */,
+				5068E2DE244AA3C90012CCF7 /* Constants.swift */,
+				5028EA44244B181D003A1830 /* HelperFunctions.swift */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -113,7 +138,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1110;
 				LastUpgradeCheck = 1200;
-				ORGANIZATIONNAME = "Vincent Liu";
+				ORGANIZATIONNAME = "Asad Azam";
 				TargetAttributes = {
 					50C6CBAE244974A400F10C5D = {
 						CreatedOnToolsVersion = 11.1;
@@ -147,7 +172,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50C66C1B244B3A5800A4BECD /* Main.storyboard in Resources */,
 				50C6CBBA244974A700F10C5D /* Preview Assets.xcassets in Resources */,
 				50C6CBB7244974A700F10C5D /* Assets.xcassets in Resources */,
 			);
@@ -162,7 +186,11 @@
 			files = (
 				5028EA45244B181D003A1830 /* HelperFunctions.swift in Sources */,
 				50C6CBB3244974A400F10C5D /* AppDelegate.swift in Sources */,
+				C3110E2227E9EB6A00F5F30A /* ContentView.swift in Sources */,
 				50C6CBC9244975F200F10C5D /* Applescript.swift in Sources */,
+				C3110E2027E9EA6B00F5F30A /* Persistence.swift in Sources */,
+				C3110E2527E9EC3900F5F30A /* DiscordX.xcdatamodeld in Sources */,
+				C3110E1E27E9E95700F5F30A /* DiscordX.swift in Sources */,
 				5068E2DF244AA3C90012CCF7 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -221,7 +249,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -276,7 +304,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -303,7 +331,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.asad.DiscordX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -329,7 +357,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.asad.DiscordX;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -378,6 +406,19 @@
 			productName = SwordRPC;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		C3110E2327E9EC3900F5F30A /* DiscordX.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C3110E2427E9EC3900F5F30A /* DiscordX.xcdatamodel */,
+			);
+			currentVersion = C3110E2427E9EC3900F5F30A /* DiscordX.xcdatamodel */;
+			path = DiscordX.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 50C6CBA7244974A400F10C5D /* Project object */;
 }

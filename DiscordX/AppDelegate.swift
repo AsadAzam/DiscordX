@@ -7,19 +7,28 @@
 //
 
 import Cocoa
-
 import SwordRPC
+import SwiftUI
 
-@NSApplicationMain
+class AppViewModel: ObservableObject {
+  @Published var showPopover = false
+}
+
+//@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-//    var window: NSWindow!
+    var window: NSWindow!
     var timer: Timer?
     var rpc: SwordRPC?
     var startDate: Date?
     var inactiveDate: Date?
     var lastWindow: String?
-
+    var notifCenter = NSWorkspace.shared.notificationCenter
+    
+    var statusItem: NSStatusItem!
+    
+    var isRelaunch: Bool = false
+    
     func beginTimer() {
         timer = Timer(timeInterval: TimeInterval(refreshInterval), repeats: true, block: { _ in
             self.updateStatus()
@@ -70,7 +79,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             } else {
                 p.assets.smallImage = discordRPImageKeyXcode
                 p.assets.largeImage = discordRPImageKeyDefault
-                p.state = "Working on \(withoutFileExt(lastWindow ?? "?" ))"
+                p.state = "Working on \(withoutFileExt((lastWindow ?? ws) ?? "?" ))"
             }
         }
 
@@ -79,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             p.assets.largeImage = discordRPImageKeyXcode
             p.details = "No file open"
         }
-
+        
         p.timestamps.start = startDate!
         p.timestamps.end = nil
         rpc!.setPresence(p)
@@ -100,20 +109,61 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-//        print("app launched")
-
-        for app in NSWorkspace.shared.runningApplications {
-            // check if xcode is running
-            if app.bundleIdentifier == xcodeBundleId {
-//                print("xcode running, connecting...")
-                initRPC()
+        launchApplication()
+        
+        let contentView = VStack {
+            VStack {
+                Spacer()
+                Button("Start DiscordX") {
+                    if self.rpc == nil {
+                        self.isRelaunch = true
+                        self.launchApplication()
+                    } else {
+                        print("DiscordX is already running")
+                    }
+                }
+                Spacer()
+                Button("Stop DiscordX") {
+                    if let rpc = self.rpc {
+                        rpc.setPresence(RichPresence())
+                        rpc.disconnect()
+                        self.rpc = nil
+                        self.clearTimer()
+                    } else {
+                        print("DiscordX is not running")
+                    }
+                }
+                Spacer()
             }
         }
+        
+        let view = NSHostingView(rootView: contentView)
 
-        let notifCenter = NSWorkspace.shared.notificationCenter
-
+        view.frame = NSRect(x: 0, y: 0, width: 150, height: 100)
+                
+        let menuItem = NSMenuItem()
+        menuItem.view = view
+                
+        let menu = NSMenu()
+        menu.addItem(menuItem)
+                
+        // StatusItem is stored as a class property.
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+        statusItem?.menu = menu
+        let image = NSImage(named: "AppIcon")
+        image?.size = NSMakeSize(24.0, 24.0)
+        statusItem.button!.image = image
+        statusItem.isVisible = true
+        
+        if let window = NSApplication.shared.windows.first {
+            window.close()
+        }
+        
+    }
+    
+    private lazy var addAllObservers: () = {
         // run on Xcode launch
-        notifCenter.addObserver(forName: NSWorkspace.didLaunchApplicationNotification, object: nil, queue: nil, using: { notif in
+        self.notifCenter.addObserver(forName: NSWorkspace.didLaunchApplicationNotification, object: nil, queue: nil, using: { notif in
             if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                 if app.bundleIdentifier == xcodeBundleId {
 //                    print("xcode launched, connecting...")
@@ -121,9 +171,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         })
-
+        
         // run on Xcode close
-        notifCenter.addObserver(forName: NSWorkspace.didTerminateApplicationNotification, object: nil, queue: nil, using: { notif in
+        self.notifCenter.addObserver(forName: NSWorkspace.didTerminateApplicationNotification, object: nil, queue: nil, using: { notif in
             if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                 if app.bundleIdentifier == xcodeBundleId {
 //                    print("xcode closed, disconnecting...")
@@ -133,43 +183,57 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         })
         
         if strictMode {
-            notifCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: nil, using: { notif in
+            self.notifCenter.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: nil, using: { notif in
                 if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                     if app.bundleIdentifier == xcodeBundleId {
                         //Xcode became active again (Frontmost)
-                        if let inactiveDate = self.inactiveDate {
-                            let newDate: Date? = self.startDate?.addingTimeInterval(-inactiveDate.timeIntervalSinceNow)
-//                            print(self.startDate, newDate)
-                            self.startDate = newDate
+                        if !self.isRelaunch {
+                            if let inactiveDate = self.inactiveDate {
+                                let newDate: Date? = self.startDate?.addingTimeInterval(-inactiveDate.timeIntervalSinceNow)
+//                                print(self.startDate, newDate)
+//                                print(self.startDate!.distance(to: newDate!))
+                                self.startDate = newDate
+                            }
+                        } else {
+                            self.startDate = Date()
+                            self.inactiveDate = nil
+                            self.isRelaunch = false
                         }
-                        self.updateStatus()
+                        // User can now start or stop DiscordX have to check if rpc is connected
+                        if self.rpc != nil {
+                            self.updateStatus()
+                        }
                     }
                 }
             })
             
-            notifCenter.addObserver(forName: NSWorkspace.didDeactivateApplicationNotification, object: nil, queue: nil, using: { notif in
+            self.notifCenter.addObserver(forName: NSWorkspace.didDeactivateApplicationNotification, object: nil, queue: nil, using: { notif in
                 if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                     if app.bundleIdentifier == xcodeBundleId {
                         //Xcode is inactive (Not frontmost)
                         self.inactiveDate = Date()
-                        self.updateStatus()
+                        if self.rpc != nil {
+                            self.updateStatus()
+                        }
                     }
                 }
             })
         }
         
         if !flauntMode {
-            notifCenter.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: nil, using: { notif in
+            self.notifCenter.addObserver(forName: NSWorkspace.willSleepNotification, object: nil, queue: nil, using: { notif in
                 if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                     if app.bundleIdentifier == xcodeBundleId {
                         //Xcode is going to become inactive (Sleep)
                         self.inactiveDate = Date()
-                        self.updateStatus()
+                        if self.rpc != nil {
+                            self.updateStatus()
+                        }
                     }
                 }
             })
             
-            notifCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: nil, using: { notif in
+            self.notifCenter.addObserver(forName: NSWorkspace.didWakeNotification, object: nil, queue: nil, using: { notif in
                 if let app = notif.userInfo?[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication {
                     if app.bundleIdentifier == xcodeBundleId {
                         //Xcode woke up from sleep
@@ -178,11 +242,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //                            print(self.startDate, newDate)
                             self.startDate = newDate
                         }
-                        self.updateStatus()
+                        if self.rpc != nil {
+                            self.updateStatus()
+                        }
                     }
                 }
             })
         }
+    }()
+    
+    func launchApplication() {
+//        print("app launched")
+        
+        for app in NSWorkspace.shared.runningApplications {
+            // check if xcode is running
+            if app.bundleIdentifier == xcodeBundleId {
+//                print("xcode running, connecting...")
+                initRPC()
+            }
+        }
+        
+        _ = addAllObservers
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
