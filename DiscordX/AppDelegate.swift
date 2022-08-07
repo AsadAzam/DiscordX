@@ -14,6 +14,20 @@ class AppViewModel: ObservableObject {
   @Published var showPopover = false
 }
 
+enum RefreshConfigurable: Int {
+    case strict = 0
+    case flaunt
+    
+    var message: String {
+        switch self {
+        case .strict:
+            return "Timer will only keep the time you were active on Xcode"
+        case .flaunt:
+            return "Timer will not stop on Sleep and Wakeup of MacOS"
+        }
+    }
+}
+
 //@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
@@ -107,45 +121,85 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.rpc!.disconnect()
         self.rpc = nil
     }
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        launchApplication()
+    
+    struct ContentView: View {
+        @State var refreshConfigurable: RefreshConfigurable
+        var appDelegate: AppDelegate
         
-        let contentView = VStack {
-            VStack {
-                Spacer()
-                Button("Start DiscordX") {
-                    if self.rpc == nil {
-                        self.isRelaunch = true
-                        self.launchApplication()
-                    } else {
-                        print("DiscordX is already running")
-                    }
-                }
-                Spacer()
-                Button("Stop DiscordX") {
-                    if let rpc = self.rpc {
-                        rpc.setPresence(RichPresence())
-                        rpc.disconnect()
-                        self.rpc = nil
-                        self.clearTimer()
-                    } else {
-                        print("DiscordX is not running")
-                    }
-                }
-                Spacer()
-                Button("Quit DiscordX") {
-                    exit(-1)
-                }
-                .padding(.top)
-                .foregroundColor(.red)
-                Spacer()
+        init(_ appDelegate: AppDelegate) {
+            self.appDelegate = appDelegate
+            if strictMode {
+                refreshConfigurable = .strict
+            } else if flauntMode {
+                refreshConfigurable = .flaunt
+            } else {
+                fatalError("Unspecified refresh type")
             }
         }
         
+        var body: some View {
+            VStack {
+                VStack {
+                    Spacer()
+                    Button("Start DiscordX") {
+                        if self.appDelegate.rpc == nil {
+                            self.appDelegate.isRelaunch = true
+                            self.appDelegate.launchApplication()
+                        } else {
+                            print("DiscordX is already running")
+                        }
+                    }
+                    Spacer()
+                    Button("Stop DiscordX") {
+                        if let rpc = self.appDelegate.rpc {
+                            rpc.setPresence(RichPresence())
+                            rpc.disconnect()
+                            self.appDelegate.rpc = nil
+                            self.appDelegate.clearTimer()
+                        } else {
+                            print("DiscordX is not running")
+                        }
+                    }
+                    
+                    Spacer()
+                    Picker(selection: $refreshConfigurable, label: Text("Select Mode :")) {
+                        Text("Strict").tag(RefreshConfigurable.strict)
+                            .help(RefreshConfigurable.strict.message)
+                        Text("Flaunt").tag(RefreshConfigurable.flaunt)
+                            .help(RefreshConfigurable.flaunt.message)
+                    }
+                    .pickerStyle(RadioGroupPickerStyle())
+                    
+                    Spacer()
+                    Button("Quit DiscordX") {
+                        exit(-1)
+                    }
+                    .padding(.top)
+                    .foregroundColor(.red)
+                    Spacer()
+                }
+            }
+            .onChange(of: refreshConfigurable) { newValue in
+                switch newValue {
+                case .strict:
+                    strictMode = true
+                    flauntMode = false
+                case .flaunt:
+                    strictMode = false
+                    flauntMode = true
+                }
+            }
+        }
+    }
+    
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        launchApplication()
+        
+        let contentView = ContentView(self)
         let view = NSHostingView(rootView: contentView)
-
-        view.frame = NSRect(x: 0, y: 0, width: 150, height: 130)
+        print(strictMode, flauntMode)
+        
+        view.frame = NSRect(x: 0, y: 0, width: 200, height: 160)
                 
         let menuItem = NSMenuItem()
         menuItem.view = view
