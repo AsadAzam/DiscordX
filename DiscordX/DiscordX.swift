@@ -12,6 +12,10 @@ import SwiftUI
 struct DiscordX: App {
     let persistenceController = PersistenceController.shared
 
+    init() {
+        UserDefaults.standard.register(defaults: ["strictMode": true, "flauntMode": false])
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
