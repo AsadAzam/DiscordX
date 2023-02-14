@@ -197,7 +197,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let contentView = ContentView(self)
         let view = NSHostingView(rootView: contentView)
-        print(strictMode, flauntMode)
+        print("strictMode=\(strictMode) flauntMode=\(flauntMode)")
         
         view.frame = NSRect(x: 0, y: 0, width: 200, height: 160)
                 
