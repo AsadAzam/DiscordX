@@ -43,6 +43,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     var isRelaunch: Bool = false
     
+    var lastFileName: String?
+    
+    var smallImage = discordRPImageKeyXcode
+    var largeImage = discordRPImageKeyDefault
+    var upperText = "null"
+    var lowerText = "null"
+    
+    
     func beginTimer() {
         timer = Timer(timeInterval: TimeInterval(refreshInterval), repeats: true, block: { _ in
             self.updateStatus()
@@ -64,44 +72,31 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let fn = getActiveFilename() //fn -> File Name
         let ws = getActiveWorkspace() //ws -> Workspace
         
-//        print("Application Name: \(an ?? "")\nFile Name: \(fn ?? "")\nWorkspace: \(ws ?? "")\n")
+        p.assets.largeText = "By SkillCode"
+        p.assets.smallText = "Xcode"
         
-        // determine file type
-        if fn != nil && an == "Xcode" {
-            p.details = "Editing \(fn!)"
-            if let fileExt = getFileExt(fn!), discordRPImageKeys.contains(fileExt) {
-                p.assets.largeImage = fileExt
-                p.assets.smallImage = discordRPImageKeyXcode
-            } else {
-                p.assets.largeImage = discordRPImageKeyDefault
-            }
-        } else {
-            if let appName = an, xcodeWindowNames.contains(appName) {
-                p.details = "Using \(appName)"
-                p.assets.largeImage = appName.replacingOccurrences(of: "\\s", with: "", options: .regularExpression).lowercased()
-                p.assets.smallImage = discordRPImageKeyXcode
-            }
+        if an != "Xcode" {
+            return
         }
+        
 
-        // determine workspace type
+        
         if ws != nil {
-            if an == "Xcode"{
-                if ws != "Untitled" {
-                    p.state = "in \(withoutFileExt(ws!))"
-                    lastWindow = ws!
-                }
-            } else {
-                p.assets.smallImage = discordRPImageKeyXcode
-                p.assets.largeImage = discordRPImageKeyDefault
-                p.state = "Working on \(withoutFileExt((lastWindow ?? ws) ?? "?" ))"
+            upperText = withoutFileExt(ws!)
+        } 
+        
+        if fn != nil {
+            lowerText = "Editing \(fn!)"
+            
+            if let fileExt = getFileExt(fn!), discordRPImageKeys.contains(fileExt) {
+                largeImage = fileExt
             }
         }
-
-        // Xcode was just launched?
-        if fn == nil && ws == nil {
-            p.assets.largeImage = discordRPImageKeyXcode
-            p.details = "No file open"
-        }
+        
+        p.assets.smallImage = smallImage
+        p.assets.largeImage = largeImage
+        p.state = lowerText
+        p.details = upperText
         
         p.timestamps.start = startDate!
         p.timestamps.end = nil
