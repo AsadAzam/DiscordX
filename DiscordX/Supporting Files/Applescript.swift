@@ -59,7 +59,7 @@ func getActiveFilename() -> String? {
         end tell
     """
     let result = NSAppleScript(source: activeApplicationVersion)?.executeAndReturnError(nil)
-    let version = result?.stringValue?.split(separator: ".")
+    let versionArray = result?.stringValue?.split(separator: ".")
 //    print(version?[0], version?[1])
     
     guard let fileNames = runAPScript(.documentNames) else {
@@ -71,7 +71,11 @@ func getActiveFilename() -> String? {
     }
     
     //Hotfix for Xcode 13.2.1+
-    if Int(version?[0] ?? "12") ?? -1 >= 13 && (Int(version?[1] ?? "5") ?? 5) >= 2 {
+    let version = [Int(versionArray?[0] ?? "12") ?? 12,
+        Int(versionArray?[1] ?? "5") ?? 5]
+    
+    if version[0] >= 13 &&
+        (version[0] > 13 || version[1] >= 2) {
         var correctedNames = [String]()
         for var windowName in windowNames {
             if let index = windowName.firstIndex(of: "—") { // — is a special character not - DO NOT GET CONFUSED
