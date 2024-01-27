@@ -70,8 +70,8 @@ func getActiveFilename() -> String? {
         return nil
     }
     
-    //Hotfix for Xcode 13.2.1
-    if Int(version?[0] ?? "12") == 13 && (Int(version?[1] ?? "5") ?? 5) >= 2 {
+    // Hotfix for Xcode 13.2.1 or higher
+    if (Int(version?[0] ?? "0") ?? 0) > 13 || ((Int(version?[0] ?? "0") ?? 0) == 13 && (Int(version?[1] ?? "0") ?? 0) >= 2) {
         var correctedNames = [String]()
         for var windowName in windowNames {
             if let index = windowName.firstIndex(of: "—") { // — is a special character not - DO NOT GET CONFUSED
